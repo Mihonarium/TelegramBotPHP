@@ -102,7 +102,7 @@ class Telegram
      */
     public function endpoint($api, array $content, $post = true)
     {
-        $url = 'https://api.telegram.org/bot'.$this->bot_token.'/'.$api;
+        $url = 'https://esc-ru.appspot.com/bot'.$this->bot_token.'/'.$api;
         if ($post) {
             $reply = $this->sendAPIRequest($url, $content);
         } else {
@@ -3058,9 +3058,12 @@ class Telegram
     private function sendAPIRequest($url, array $content, $post = true)
     {
         if (isset($content['chat_id'])) {
-            $url = $url.'?chat_id='.$content['chat_id'];
+            $url = $url.'?chat_id='.$content['chat_id'].'&host=api.telegram.org';
             unset($content['chat_id']);
         }
+		else {
+			$url = $url.'?host=api.telegram.org';
+		}
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, false);
